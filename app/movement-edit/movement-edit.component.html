@@ -1,0 +1,74 @@
+<form class="p-2" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-row my-2">
+        <div class="btn-group" role="group" aria-label="View Type">
+            <button type="button" [class.active]="selectedType == 1" (click)="switch(1)" class="btn btn-info btn-sm">
+                <span>Nouveau Crédit</span>
+            </button>
+            <button type="button" [class.active]="selectedType == 2" (click)="switch(2)" class="btn btn-info btn-sm">
+                <span>Nouveau Débit</span>
+            </button>
+            <button type="button" [class.active]="selectedType == 3" (click)="switch(3)" class="btn btn-info btn-sm">
+                <span>Nouveau Virement</span>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="formActive">
+        <div class="form-row">
+            <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-2">
+                <input type="date" class="form-control form-control-sm" id="inputDate" [disabled]="!formActive"
+                    [ngModel]="activeMovement.movementDate | date: 'yyyy-MM-dd'" (ngModelChange)="updateDate($event)"
+                    name="movementDate">
+            </div>
+            <label for="inputTier" class="col-sm-2 col-form-label">Tier</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control form-control-sm" id="inputTier" [disabled]="!formActive"
+                    [(ngModel)]="activeMovement.tiers" name="tiers">
+            </div>
+        </div>
+        <div class="form-row" *ngIf="selectedType == 3">
+            <label for="inputFrom" class="col-sm-2 col-form-label">Depuis</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="inputFrom" [disabled]="!formActive">
+            </div>
+            <label for="inputTo" class="col-sm-2 col-form-label">Vers</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="inputTo" [disabled]="!formActive">
+            </div>
+        </div>
+        <div class="form-row">
+            <label for="inputCategory" class="col-sm-2 col-form-label">Categorie</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="inputCategory" [disabled]="!formActive">
+            </div>
+            <label for="inputSubcategory" class="col-sm-2 col-form-label">Sous-categorie</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="inputSubcategory" [disabled]="!formActive">
+            </div>
+        </div>
+        <div class="form-row">
+            <label for="inputAmount" class="col-sm-2 col-form-label">Montant</label>
+            <div class="col-sm-4 input-group input-group-sm mb-3">
+                <div class="input-group-prepend" *ngIf="selectedType != 0">
+                    <span class="input-group-text"
+                        [ngClass]="{'bg-warning': movementSign==='-', 'bg-success': movementSign==='+'}">{{ movementSign
+                        }}</span>
+                </div>
+                <input type="number" class="form-control form-control-sm" id="inputAmount" [disabled]="!formActive"
+                    [(ngModel)]="amount" name="amount">
+            </div>
+            <label for="inputNote" class="col-sm-2 col-form-label">Note</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="inputNote" [disabled]="!formActive">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-3 text-right">
+                <button type="submit" class="btn btn-success btn-sm">Valider</button>
+            </div>
+            <div class="col-sm-3 text-right">
+                <button type="submit" class="btn btn-warning btn-sm" (click)="onCancel()">Annuler</button>
+            </div>
+        </div>
+    </div>
+</form>

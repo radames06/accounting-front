@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">My Money</a>
+  <div class="navbar">
+    <ul class="nav navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/accounts" *ngIf="isAuthenticated">Comptes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/auth" *ngIf="!isAuthenticated">Authenticate</a>
+      </li>
+      <li class="dropdown" appDropdown>
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" *ngIf="isAuthenticated">
+          Gérer
+        </a>
+        <ul class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/manage/tiers">Les tiers</a>
+          <a class="dropdown-item" routerLink="/manage/categories">Les catégories</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/manage/accounts">Les comptes</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="ml-auto">
+    <ul class="navbar navbar-nav">
+      <li class="nav-item">
+        <a style="cursor: pointer;" *ngIf="isAuthenticated" (click)="onLogout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
